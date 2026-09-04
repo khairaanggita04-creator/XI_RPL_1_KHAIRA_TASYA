@@ -1,5 +1,5 @@
 *{
-   margin: 0;
+   maargin: 0;
    padding: 0;
    box-sizing: border-box;
 }
@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(169, 169, 216);
+    background-color:black;
     color: brown;
     padding: 1rem 2rem;
 }

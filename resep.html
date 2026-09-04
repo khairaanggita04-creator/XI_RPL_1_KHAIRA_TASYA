@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>resep</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: lightblue;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: rgba(40, 40, 40, 0.95);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 145, 0, 0.7);
+        }
+
+        header h1 {
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: lightblue;
+        }
+        /* ================= HALAMAN ================= */
+
+        .page {
+            display: none;
+            min-height: 85vh;
+            padding: 50px 20px;
+        }
+
+        .page.active {
+            display: block;
+            animation: muncul 0.5s ease;
+        }
+
+        @keyframes muncul {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= HOME ================= */
+
+        .hero {
+            max-width: 1000px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            color:black;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        /* ================= KARTU ================= */
+
+        .card {
+            max-width: 380px;
+            margin: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 25px;
+
+            /* BORDER TERANG */
+            border: 3px solid lightblue;
+            box-shadow:
+                0 0 10px lightblue,
+                0 0 25px lightblue;
+
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 0 15px lightblue,
+                0 0 40px lightblue;
+        }
+
+        /* ================= GAMBAR ================= */
+
+        .image-box {
+            width: 100%;
+            height: 230px;
+            overflow: hidden;
+            border-radius: 18px;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        /* GAMBAR MEMBESAR SAAT HOVER */
+
+        .image-box:hover img {
+            transform: scale(1.2);
+        }
+
+        /* ================= JUDUL ================= */
+
+        .card h3 {
+            font-size: 28px;
+            color: #d35400;
+            margin: 18px 0 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* JUDUL BERUBAH WARNA */
+
+        .card h3:hover {
+            color: #ff4081;
+        }
+
+        .card p {
+            margin-bottom: 18px;
+            color: #666;
+        }
+
+        /* ================= BUTTON ================= */
+
+        button {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #ff6f00, #ff9800);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 15px #ff9800;
+        }
+
+        /* ================= DETAIL RESEP ================= */
+
+        .resep {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+
+            border: 3px solid #ff9800;
+            box-shadow:
+                0 0 15px #ff9800,
+                0 0 35px rgba(255, 152, 0, 0.5);
+        }
+
+        .resep h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #d35400;
+            margin-bottom: 20px;
+        }
+
+        .resep img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .resep h3 {
+            color: #e67e22;
+            margin: 20px 0 10px;
+        }
+
+        .resep ul,
+        .resep ol {
+            margin-left: 25px;
+            line-height: 1.9;
+        }
+
+        .kembali {
+            margin-top: 25px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #292929;
+            color: white;
+            text-align: center;
+            padding: 18px;
+        }
+
+        /* ================= HP ================= */
+
+        @media (max-width: 600px) {
+
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            .resep {
+                padding: 20px;
+            }
+
+            .resep img {
+                height: 250px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <h1>🍴 DAPUR LEZAT</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+
+            <a onclick="bukaHalaman('resep')">
+                Resep
+            </a>
+        </nav>
+
+    </header>
+
+
+    <!-- ================= HALAMAN HOME ================= -->
+
+    <section id="home" class="page active">
+
+        <div class="hero">
+
+            <h2>Resep Hari Ini 🥪</h2>
+
+            <p>
+                Nikmati resep sederhana yang mudah dibuat
+                dan tentunya lezat!
+            </p>
+
+
+            <!-- KARTU SANDWICH -->
+
+            <div class="card">
+
+                <div class="image-box">
+
+                    <img
+                    src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af"
+                    alt="Sandwich">
+
+                </div>
+
+
+                <h3 onclick="bukaHalaman('resep')">
+                    Sandwich
+                </h3>
+
+                <p>
+                    Sandwich sederhana dengan telur,
+                    sayuran dan saus yang lezat.
+                </p>
+
+
+                <button onclick="bukaHalaman('resep')">
+                    Lihat Resep →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= HALAMAN RESEP ================= -->
+
+    <section id="resep" class="page">
+
+        <div class="resep">
+
+            <h2>🥪 Resep Sandwich</h2>
+
+
+            <img
+            src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af"
+            alt="Sandwich">
+
+
+            <!-- BAHAN -->
+
+            <h3>🛒 Bahan-bahan</h3>
+
+            <ul>
+
+                <li>2 lembar roti tawar</li>
+
+                <li>1 butir telur</li>
+
+                <li>Selada secukupnya</li>
+
+                <li>1 buah tomat</li>
+
+                <li>Mayones secukupnya</li>
+
+                <li>Saus sambal secukupnya</li>
+
+                <li>Keju secukupnya</li>
+
+            </ul>
+
+
+            <!-- CARA MEMBUAT -->
+
+            <h3>👨‍🍳 Cara Membuat</h3>
+
+            <ol>
+
+                <li>
+                    Panggang roti hingga sedikit kecokelatan.
+                </li>
+
+                <li>
+                    Goreng telur hingga matang.
+                </li>
+
+                <li>
+                    Letakkan selada dan tomat di atas roti.
+                </li>
+
+                <li>
+                    Tambahkan telur dan keju.
+                </li>
+
+                <li>
+                    Tambahkan mayones dan saus.
+                </li>
+
+                <li>
+                    Tutup dengan roti lainnya.
+                </li>
+
+                <li>
+                    Potong sandwich menjadi dua bagian.
+                </li>
+
+            </ol>
+
+
+            <button
+            class="kembali"
+             onclick="bukaHalaman('home')">
+               ← Kembali
+            </button>
+
+            <button
+            class="pesan"
+             onclick="pesan('pesan')">
+              pesan 
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Dapur Lezat | Selamat mencoba ❤️
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function bukaHalaman(nama) {
+
+            // Mengambil semua halaman
+            let halaman =
+                document.querySelectorAll(".page");
+
+
+            // Menyembunyikan semua halaman
+            halaman.forEach(function(item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            // Menampilkan halaman yang dipilih
+            document
+                .getElementById(nama)
+                .classList.add("active");
+
+
+            // Kembali ke bagian atas
+            window.scrollTo(0, 0);
+        }
+            function pesan(pesan) {
+                alert("terimakasih telah memesan, pesanan akan segera diantar!"
+                );
+            }
+
+        
+
+    </script>
+
+</body>
+</html>
+</body>
+</html>
