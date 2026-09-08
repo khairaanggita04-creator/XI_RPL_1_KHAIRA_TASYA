@@ -1,26 +1,29 @@
 <?php
 //masukkan library DomPDF
 require_once 'vendor/autoload.php';
-use dompdf\dompdf;
-use dompdf\Options;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+//zona waktu indonesia
+date_default_timezone_set('Asia/jakarta');
 
 //instansiasi objek dompdf
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     //ambil data dari form html
-    $nama             = htmlspecialchars($_POST['nama']);
-    $nis              = htmlspecialchars($_POST['nis']);
-    $kelas            = htmlspecialchars($_POST['kelas']);
-    $alasan           = htmlspecialchars($_POST['alasan']);
-    $tgl_mulai        = date('d F Y', strtotime($_POST['tgl_mulai']));
-    $tgl_selesai      = date('d F Y', strtotime($_POST['tgl_selesai']));
-    $keterangan       = htmlspecialchars($_POST['keterangan']);
+    $nama             = htmlspecialchars($_POST['nama']??'');
+    $nis              = htmlspecialchars($_POST['nis']??'');
+    $kelas            = htmlspecialchars($_POST['kelas']??'');
+    $alasan           = htmlspecialchars($_POST['alasan']??'');
+    $keterangan       = htmlspecialchars($_POST['keterangan']??'');
+    
+    //format tanggal
+    $tgl_mulai        = date('d F Y', strtotime($_POST['tgl_mulai']??''));
+    $tgl_selesai      = date('d F Y', strtotime($_POST['tgl_selesai']??''));
     $tgl_sekarang     = date('d F Y');
 
 
-
-
 //template halaman pdf
- $html = ' 
+ $html= '
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,13 +70,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             margin-top: 50px;
         }
         .tdd-box{
-            float: righr;
+            float: right;
             widht: 200px;
             text-align: center;
         }
       </style>
 </head>
 <body>
+<!-- KOP SURAT-->
   <div class="kop">
     <h2>SMK TEXMACO SEMARANG</h2>
     <P>Jl. raya mangkang kulon | telp:(024) 223-888</P>
@@ -85,15 +89,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <table class="table-data">
         <tr>
             <td width="130">nama</td>
-            <td widht="15">:</td>
-            <td><b>' .$nama . '</b></td>
+            <td width="15">:</td>
+            <td><b>' . $nama . '</b></td>
         </tr>
         <tr>
-            <td  width="130">NIS</td>
+            <td  width="130">nis</td>
             <td> :</td>
             <td>' . $nis . '</td>
+            </tr>
         <tr>
             <td>kelas</td>
+            <td> :</td>
             <td>' . $kelas .'</td>
         </tr> 
 </table>
@@ -109,8 +115,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     saya ucapkan terimakasih.
    </p>  
    </div>
-   <div class="ttd-coontainer">
-    <div class="ttd-box">
+   <div class="tdd-coontainer">
+    <div class="tdd-box">
         <p>semarang, '. $tgl_sekarang .'<br>hormat saya,</p>
         <br><br><br>
         <p><b>('. $nama .')</b></p>
@@ -130,11 +136,18 @@ $options ->set('isRemoteEnabled', true); //memungkinkan load gambar eksternal ji
 $dompdf = new dompdf($options);
 
 // 4. render HTML ke PDF 
-$dompdf->loadhtml('$html');
+$dompdf->loadHtml($html);
 $dompdf->setpaper('A4', 'portrait');
 $dompdf->render();
 
 // 5. stream PDF ke browser 
-$dompdf->stream("surat_izin_" . str_replace(' ','_',$nama) . "pdf", ["attachment" => false]);
+$nama_file ='surat_izin_' . str_replace(' ','_',$nama) . 'pdf';
+
+$dompdf->stream(
+    $nama_file,
+    array (
+ "attachment" => false
+) 
+);
 }
 ?>
